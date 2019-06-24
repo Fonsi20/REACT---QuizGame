@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LogIn from './pages/login';
-import home from './pages/home';
+import home from './pages/question';
 import score from './pages/score';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={(history) => <LogIn />} />
-            <Route path="/home" component={home} />
+            <Route path="/question" component={home} />
             <Route path="/score" component={score} />
           </Switch>
         </BrowserRouter>

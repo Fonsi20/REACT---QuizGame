@@ -1,33 +1,30 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import './style.css';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+function createData(name, calories, fat, carbs ) {
+    return { name, calories, fat, carbs };
 }
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24),
-    createData('Ice cream sandwich', 237, 9.0, 37),
-    createData('Eclair', 262, 16.0, 24),
-    createData('Cupcake', 305, 3.7, 67),
-    createData('Gingerbread', 356, 16.0, 49),
+    createData('Fonsi20fernandez@gmail.com', 159, 6.0, 24),
+    createData('Ice@gmail.com', 237, 9.0, 37),
+    createData('Mario@gmail.com', 262, 16.0, 24),
+    createData('Emma@gmail.com', 305, 3.7, 67),
+    createData('Fany@gmail.com', 356, 16.0, 49),
 ];
 
 //BODY
-function home(props) {
+function score(props) {
     return (
         <main>
             <Grid container>
@@ -38,14 +35,14 @@ function home(props) {
                     container
                     direction="column"
                     justify="center"
-                    alignItems="center"
-                >
+                    alignItems="center">
                     <Paper className="paper">
                         <Typography variant="h5" component="h3"><b>Scores</b></Typography>
                         <Typography component="p"> You can see the best 5 scores.</Typography>
 
                         <div>
-                            <Table style={{marginTop:'20px', marginBottom:'20px'}} size="small">
+
+                            <Table style={{ marginTop: '20px', marginBottom: '20px' }} size="small">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Email (User)</TableCell>
@@ -69,12 +66,12 @@ function home(props) {
                             </Table>
                         </div>
                         <Button
-                                onClick='startGame'
-                                fullWidth
-                                variant="contained" color="secondary"
-                                className="button"
-                                style={{ marginTop: '10px' }}>
-                                Go Back Home</Button>
+                            onClick='startGame'
+                            fullWidth
+                            variant="contained" color="secondary"
+                            className="button"
+                            style={{ marginTop: '10px' }}>
+                            Go Back Home</Button>
                     </Paper>
                 </Grid>
             </Grid>
@@ -83,8 +80,8 @@ function home(props) {
 
 };
 
-home.propTypes = {
+score.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default home;
+export default score;

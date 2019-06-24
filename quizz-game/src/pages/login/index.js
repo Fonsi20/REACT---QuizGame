@@ -32,14 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 //BODY
 function LogIn(props) {
-
-    //Clear de fields for security
-    const startGame = event => {
-        //console.log(getElementById("email"));
-        document.getElementById("email").value = "";
-    }
-
-
+    
     const classes = useStyles();
 
     return (
