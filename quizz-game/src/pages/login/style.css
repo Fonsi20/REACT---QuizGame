@@ -1,0 +1,21 @@
+
+.button {
+    align-items: center;
+    display: flex;
+    margin-top: 20px;
+}
+
+.root {
+    background: #00BCD4;
+    height: -webkit-fill-available;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.paper {
+    padding: 20px 20px;
+    display: block;
+    align-items: center;
+    margin: 25px;
+    width: 1;
+}

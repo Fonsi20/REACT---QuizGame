@@ -10,6 +10,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { Link } from 'react-router-dom';
 
 function createData(name, calories, fat, carbs ) {
     return { name, calories, fat, carbs };
@@ -65,13 +66,14 @@ function score(props) {
                                 </TableBody>
                             </Table>
                         </div>
+                        <Link to="/">
                         <Button
                             onClick='startGame'
                             fullWidth
                             variant="contained" color="secondary"
                             className="button"
                             style={{ marginTop: '10px' }}>
-                            Go Back Home</Button>
+                            Go Back Home</Button></Link>
                     </Paper>
                 </Grid>
             </Grid>
