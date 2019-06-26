@@ -8,8 +8,6 @@ import PropTypes from 'prop-types';
 import './style.css';
 import axios from 'axios';
 
-
-
 //BODY
 class Home extends Component {
 
@@ -32,14 +30,13 @@ class Home extends Component {
         }
     }
 
-
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
         axios.get('http://localhost:3000/api/question')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {
                 body.data.data.forEach(data => {
                     if (data.id === this.props.props.props.counter.cont) {
-                        console.log(data.question);
+                        console.log("inside!!  " + data.question);
                         this.setState({ id: data.id });
                         this.setState({ question: data.question });
                         this.setState({ aswn1: data.anws1 });

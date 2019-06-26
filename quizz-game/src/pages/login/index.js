@@ -18,38 +18,51 @@ class LogIn extends React.Component {
 
         this.state = {
             id: [],
-            question: [],
-            aswn1: [],
-            aswn2: [],
-            aswn3: [],
-            aswn4: [],
-            true: []
+            email: [],
+            email2: [],
+            score: [],
         }
     }
 
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
-        axios.get('http://localhost:3000/api/question')
+        axios.get('http://localhost:3000/api/Verify')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {
                 body.data.data.forEach(data => {
-                    console.log(data.question);
-                    this.setState({ id: data.id });
-                    this.setState({ question: data.question });
-                    this.setState({ aswn1: data.aswn1 });
-                    this.setState({ aswn2: data.aswn2 });
-                    this.setState({ aswn2: data.aswn3 });
-                    this.setState({ aswn2: data.aswn4 });
-                    this.setState({ true: data.true });
+                    this.setState({ id: data.userid });
+                    this.setState({ email: data.email });
+                    this.setState({ score: data.score });
                 });
             })
             .catch(function (error) {
                 console.log(error);
             })
+        console.log(this.state);
+        this.forceUpdateHandler();
     };
 
     componentDidMount() {
         this.getDataFromDb();
+        console.log(this.state);
     };
+
+    forceUpdateHandler() {
+        this.forceUpdate();
+    };
+
+    starGame = () => {
+        var MAIL= this.Email
+        for (var i = 0; i <MAIL ; i++) {
+            console.log(this.MAIL[i]);
+            if (this.email2 === this.MAIL[i]) {
+                console.log("exist in the DDBB");
+            } else {
+                console.log(" come to play");
+                window.location.replace("http://localhost:3001/question");
+            }
+        }
+    };
+
 
     render() {
         console.log(this.props);
@@ -82,19 +95,17 @@ class LogIn extends React.Component {
                             />
                         </div>
                         <div>
-                            <Link to="/question">
-                                <Button
-                                    style={{ marginTop: '10px' }}
-                                    onClick='startGame'
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className="button">
-                                    Start Game</Button></Link>
+                            <Button
+                                style={{ marginTop: '10px' }}
+                                onClick={event => this.starGame()}
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className="button">
+                                Start Game</Button>
                             <Link to="/score">
                                 <Button
                                     style={{ marginTop: '10px' }}
-                                    onClick='startGame'
                                     fullWidth
                                     variant="contained"
                                     color="secondary"

@@ -2,7 +2,7 @@ var express = require("express");
 var mongoose = require("mongoose");
 var app = express();
 const API_PORT = 3000;
-const Data = require("./data");
+const {users,questions} = require("./data");
 const router = express.Router();
 
 // this is our MongoDB database
@@ -21,7 +21,7 @@ db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.get('/api/question', function (req, res) {
-    Data.find((err, data) => {
+    questions.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
@@ -29,7 +29,7 @@ app.get('/api/question', function (req, res) {
 
 app.post('/api/results', function (req, res) {
 
-    let data = new Data();
+    let users = new users();
     const { id, email, score } = req.body;
 
     if ((!id && id !== 0)) {
@@ -38,31 +38,31 @@ app.post('/api/results', function (req, res) {
             error: "INVALID INPUTS"
         });
     }
-    data.email = email;
-    data.score = score;
-    data.id = id;
-    data.save(err => {
+    users.email = email;
+    users.score = score;
+    users.id = id;
+    users.save(err => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
     });
 });
 
 app.get('/api/results', function (req, res) {
-    Data.find((err, data) => {
+    users.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
 });
 
 app.get('/api/Verify', function (req, res) {
-    Data.find((err, data) => {
+    users.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
 });
 
 app.get('/api/results/:userId', function (req, res) {
-    Data.find((err, data) => {
+    users.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
