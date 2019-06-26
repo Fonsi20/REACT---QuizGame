@@ -9,52 +9,36 @@ import { Link } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
 
+var textLogin = "Email";
 
 //BODY
-
 class LogIn extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            id: [],
             email: [],
-            email2: [],
-            score: [],
         }
     }
 
-    componentDidMount() {
-        this.getDataFromDb();
-    };
-
-    //Obtain the Data of my DDBB
-    getDataFromDb = () => {
+    starGame = () => {
+        //Obtain the Data of my DDBB
+        var fail = true;
         axios.get('http://localhost:3000/api/Verify')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {
                 body.data.data.forEach(data => {
-                    this.setState({ id: data.userid });
-                    this.setState({ email: data.email });
-                    this.setState({ score: data.score });
+                    if (data.email === this.state.email) {
+                        fail = false;
+                        window.alert("User exist in the DDBB");
+                    } else {
+
+                    }
                 });
             })
             .catch(function (error) {
                 console.log(error);
             });
-    };
-
-    starGame = () => {
-        var MAIL= this.Email
-        for (var i = 0; i <MAIL ; i++) {
-            console.log(this.MAIL[i]);
-            if (this.email2 === this.MAIL[i]) {
-                console.log("exist in the DDBB");
-            } else {
-                console.log(" come to play");
-                window.location.replace("http://localhost:3001/question");
-            }
-        }
     };
 
 
@@ -78,7 +62,7 @@ class LogIn extends React.Component {
                                 component="div"
                                 whiteSpace="nowrap"
                                 id="email"
-                                label="Email"
+                                label={textLogin}
                                 placeholder="user@mail.com"
                                 type="email"
                                 margin="normal"

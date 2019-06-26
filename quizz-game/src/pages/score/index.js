@@ -12,16 +12,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Link } from 'react-router-dom';
 
-function createData(name, calories, fat, carbs ) {
-    return { name, calories, fat, carbs };
+function createData(name, score ) {
+    return { name, score };
 }
 
 const rows = [
-    createData('Fonsi20fernandez@gmail.com', 159, 6.0, 24),
-    createData('Ice@gmail.com', 237, 9.0, 37),
-    createData('Mario@gmail.com', 262, 16.0, 24),
-    createData('Emma@gmail.com', 305, 3.7, 67),
-    createData('Fany@gmail.com', 356, 16.0, 49),
+    createData('Fonsi20fernandez@gmail.com', 159),
+    createData('Ice@gmail.com', 237),
+    createData('Mario@gmail.com', 262),
+    createData('Emma@gmail.com', 305),
+    createData('Fany@gmail.com', 356),
 ];
 
 //BODY
@@ -47,9 +47,7 @@ function score(props) {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Email (User)</TableCell>
-                                        <TableCell align="right">True</TableCell>
-                                        <TableCell align="right">False</TableCell>
-                                        <TableCell align="right">Time</TableCell>
+                                        <TableCell align="right">Score</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -58,9 +56,7 @@ function score(props) {
                                             <TableCell component="th" scope="row">
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
+                                            <TableCell align="right">{row.score}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
