@@ -11,6 +11,7 @@ import axios from 'axios';
 
 
 //BODY
+
 class LogIn extends React.Component {
 
     constructor(props) {
@@ -23,6 +24,10 @@ class LogIn extends React.Component {
             score: [],
         }
     }
+
+    componentDidMount() {
+        this.getDataFromDb();
+    };
 
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
@@ -37,10 +42,6 @@ class LogIn extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
-    };
-
-    componentDidMount() {
-        this.getDataFromDb();
     };
 
     starGame = () => {

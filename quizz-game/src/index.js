@@ -1,21 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux'
+import { Provider,  } from 'react-redux';
+import { createStore } from 'redux';
+
 import App from './App';
-import reducer from './reducers/index';
+import reducer from './store/reducers';
+import {initialState} from "./store/initialState";
+
+import './index.css';
 
 const rootEl = document.getElementById('root');
-const store = createStore(reducer);
-console.log(store.getState());
+const store = createStore(reducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 const render = () => ReactDOM.render(
     <Provider store={store}>
-        <App props={store.getState()}/>
+        <App />
     </Provider>,
     rootEl
 );
 
 render();
-store.subscribe(render);

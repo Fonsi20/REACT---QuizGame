@@ -7,46 +7,31 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import './style.css';
 import axios from 'axios';
+import {connect} from "react-redux";
+import {setCounterAction} from "../../store/actions";
+import {counterSelector} from "../../store/selectors";
+import {getCurrentQuestion} from "../../store/selectors/questions";
+import {setQuestionsAction} from "../../store/actions/questions";
 
 //BODY
+
 class Home extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            id: [],
-            question: [],
-            aswn1: [],
-            aswn2: [],
-            aswn3: [],
-            aswn4: [],
-            true: [],
-            yes: [],
-            no: [],
-            cont: [],
-            conttrue: [],
-            contfalse: [],
+            done: false
         }
     }
 
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
+
         axios.get('http://localhost:3000/api/question')
-            .then(res => JSON.parse(JSON.stringify(res))).then(body => {
-                body.data.data.forEach(data => {
-                    if (data.id === this.props.props.props.counter.cont) {
-                        console.log("inside!!  " + data.question);
-                        this.setState({ id: data.id });
-                        this.setState({ question: data.question });
-                        this.setState({ aswn1: data.anws1 });
-                        this.setState({ aswn2: data.anws2 });
-                        this.setState({ aswn3: data.anws3 });
-                        this.setState({ aswn4: data.anws4 });
-                        this.setState({ true: data.true });
-                    }
-                    console.log("QUESTIONS: " + this.state.question);
-                });
+            .then(res => JSON.parse(JSON.stringify(res)).data.data)
+            .then(body => {
+                this.props.setQuestionsDispatch(body)
             })
             .catch(function (error) {
                 console.log(error);
@@ -54,25 +39,25 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        this.getDataFromDb();
+            this.getDataFromDb();
     };
 
     checkQuestion = (event, anws) => {
-        if (anws === this.state.true) {
+        if (anws === this.props.question.true) {
             console.log("SIIIII");
-            onclick = this.props.onIncrementTrue;
         } else {
             console.log("NOOOOOOOOO");
-            onclick = this.props.onIncrementFalse;
         }
-        onclick = this.props.onIncrement;
-        if (this.props.value === 11) {
+        this.props.setCounterDispatch(this.props.counter + 1);
+        if (this.props.counter === 11) {
             console.log("finish");
         }
-    }
+    };
 
     render() {
-        const valu = this.props.props.props.counter.cont;
+        const value = this.props.counter + 1;
+        const data = this.props.question;
+
         return (
             <Grid container>
                 <Grid
@@ -85,7 +70,7 @@ class Home extends Component {
                     alignItems="center"
                 >
                     <Paper className="paper">
-                        <Typography variant="h5" component="h3"><b>Number {valu}</b></Typography>
+                        <Typography variant="h5" component="h3"><b>Number {value}</b></Typography>
                         <Typography component="p"> You have to response 10 questions.</Typography>
                         <div>
                             <TextField
@@ -93,7 +78,7 @@ class Home extends Component {
                                 whiteSpace="nowrap"
                                 id="question"
                                 label="Question"
-                                value={this.state.question}
+                                value={data.question}
                                 margin="normal"
                                 variant="filled"
                                 fullWidth
@@ -103,39 +88,39 @@ class Home extends Component {
                         <div>
                             <Button
                                 className='button'
-                                onClick={event => this.checkQuestion(event, this.state.aswn1)}
+                                onClick={event => this.checkQuestion(event, data.anws1)}
                                 fullWidth
                                 variant="outlined" color="inherit"
                                 style={{ marginTop: '10px' }}>
-                                {this.state.aswn1}</Button>
+                                {data.anws1}</Button>
                             <Button
-                                onClick={event => this.checkQuestion(event, this.state.aswn2)}
+                                onClick={event => this.checkQuestion(event, data.anws2)}
                                 fullWidth
                                 variant="outlined" color="inherit"
                                 className="button"
                                 style={{ marginTop: '10px' }}>
-                                {this.state.aswn2}</Button>
+                                {data.anws2}</Button>
                             <Button
-                                onClick={event => this.checkQuestion(event, this.state.aswn3)}
+                                onClick={event => this.checkQuestion(event, data.anws3)}
                                 fullWidth
                                 variant="outlined" color="inherit"
                                 className="button"
                                 style={{ marginTop: '10px' }}>
-                                {this.state.aswn3}</Button>
+                                {data.anws3}</Button>
                             <Button
-                                onClick={event => this.checkQuestion(event, this.state.aswn4)}
+                                onClick={event => this.checkQuestion(event, data.anws4)}
                                 fullWidth
                                 variant="outlined" color="inherit"
                                 className="button"
                                 style={{ marginTop: '10px' }}>
-                                {this.state.aswn4}</Button>
+                                {data.anws4}</Button>
                         </div>
                     </Paper>
                 </Grid>
             </Grid>
         )
     }
-};
+}
 
 Home.propTypes = {
     value: PropTypes.number.isRequired,
@@ -144,4 +129,13 @@ Home.propTypes = {
     onIncrementFalse: PropTypes.func.isRequired
 };
 
-export default Home;
+export default connect(
+    state => ({
+        counter: counterSelector(state),
+        question: getCurrentQuestion(state)
+    }),
+    dispatch => ({
+        setCounterDispatch: value => dispatch(setCounterAction(value)),
+        setQuestionsDispatch: questions => dispatch(setQuestionsAction(questions))
+    })
+)(Home);

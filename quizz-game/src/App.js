@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import LogIn from './pages/login';
 import Home from './pages/question';
 import score from './pages/score';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
 
@@ -11,14 +12,8 @@ class App extends Component {
       <React.Fragment>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={(history) => <LogIn props={this.props} />} />
-            <Route exact path="/question" component={(history) =>
-              <Home
-                props={this.props}
-                onIncrement={() => this.props.dispatch({ type: 'INCREMENT' })}
-                onIncrementTrue={() => this.props.dispatch({ type: 'INCREMENTTRUE' })}
-                onIncrementFalse={() => this.props.dispatch({ type: 'INCREMENTFALSE' })}
-              />} />
+            <Route exact path="/" component={() => <LogIn />} />
+            <Route exact path="/question" component={() => <Home />} />
             <Route path="/score" component={score} />
           </Switch>
         </BrowserRouter>
