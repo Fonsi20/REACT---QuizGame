@@ -36,18 +36,11 @@ class LogIn extends React.Component {
             })
             .catch(function (error) {
                 console.log(error);
-            })
-        console.log(this.state);
-        this.forceUpdateHandler();
+            });
     };
 
     componentDidMount() {
         this.getDataFromDb();
-        console.log(this.state);
-    };
-
-    forceUpdateHandler() {
-        this.forceUpdate();
     };
 
     starGame = () => {
