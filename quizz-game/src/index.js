@@ -12,7 +12,7 @@ console.log(store.getState());
 
 const render = () => ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App props={store.getState()}/>
     </Provider>,
     rootEl
 );

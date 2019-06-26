@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 //BODY
-class LogIn extends Component {
+class LogIn extends React.Component {
 
     constructor(props) {
         super(props);
@@ -29,8 +29,6 @@ class LogIn extends Component {
 
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
-        console.log(this.props.cont);
-        console.log(this.state.question);
         axios.get('http://localhost:3000/api/question')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {
                 body.data.data.forEach(data => {
@@ -47,7 +45,6 @@ class LogIn extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-        console.log(this.state.question);
     };
 
     componentDidMount() {
@@ -55,8 +52,7 @@ class LogIn extends Component {
     };
 
     render() {
-
-
+        console.log(this.props);
         return (
             <main>
                 <Grid

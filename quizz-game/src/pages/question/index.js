@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -9,8 +8,10 @@ import PropTypes from 'prop-types';
 import './style.css';
 import axios from 'axios';
 
+
+
 //BODY
-class home extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -31,13 +32,13 @@ class home extends Component {
         }
     }
 
+
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
-        console.log("VALUE: " + this.props);
         axios.get('http://localhost:3000/api/question')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {
                 body.data.data.forEach(data => {
-                    if (data.id === this.props.cont) {
+                    if (data.id === this.props.props.props.counter.cont) {
                         console.log(data.question);
                         this.setState({ id: data.id });
                         this.setState({ question: data.question });
@@ -62,19 +63,19 @@ class home extends Component {
     checkQuestion = (event, anws) => {
         if (anws === this.state.true) {
             console.log("SIIIII");
-            this.state.dispatch({ type: 'INCREMENTTRUE' });
+            onclick = this.props.onIncrementTrue;
         } else {
             console.log("NOOOOOOOOO");
-            this.state.dispatch({ type: 'INCREMENTFALSE' });
+            onclick = this.props.onIncrementFalse;
         }
-        this.state.dispatch({ type: 'INCREMENT' })
+        onclick = this.props.onIncrement;
         if (this.props.value === 11) {
             console.log("finish");
         }
     }
 
     render() {
-        const { valu } = this.props.cont
+        const valu = this.props.props.props.counter.cont;
         return (
             <Grid container>
                 <Grid
@@ -139,11 +140,11 @@ class home extends Component {
     }
 };
 
-home.propTypes = {
+Home.propTypes = {
     value: PropTypes.number.isRequired,
     onIncrement: PropTypes.func.isRequired,
     onIncrementTrue: PropTypes.func.isRequired,
     onIncrementFalse: PropTypes.func.isRequired
 };
 
-export default connect(home);
+export default Home;
