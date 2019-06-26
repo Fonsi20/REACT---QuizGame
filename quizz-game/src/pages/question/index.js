@@ -7,11 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import './style.css';
 import axios from 'axios';
-import {connect} from "react-redux";
-import {setCounterAction} from "../../store/actions";
-import {counterSelector} from "../../store/selectors";
-import {getCurrentQuestion} from "../../store/selectors/questions";
-import {setQuestionsAction} from "../../store/actions/questions";
+import { connect } from "react-redux";
+import { setCounterAction } from "../../store/actions";
+import { counterSelector } from "../../store/selectors";
+import { getCurrentQuestion } from "../../store/selectors/questions";
+import { setQuestionsAction } from "../../store/actions/questions";
+import { setCounterTrueAction } from "../../store/actions/score";
+import { setCounterFalseAction } from "../../store/actions/score";
+import { scoreSelector } from "../../store/selectors";
 
 //BODY
 
@@ -39,18 +42,25 @@ class Home extends Component {
     };
 
     componentDidMount() {
-            this.getDataFromDb();
+        console.log(this.props.score);
+        this.getDataFromDb();
     };
 
     checkQuestion = (event, anws) => {
+        console.log(this.props.score);
         if (anws === this.props.question.true) {
             console.log("SIIIII");
+            //console.log(this.props.contTrue);
+            this.props.setCounterTrueDispatch(this.props.score.contTrue + 1);
         } else {
             console.log("NOOOOOOOOO");
+            this.props.setCounterFalseDispatch(this.props.score.contFalse + 1);
         }
         this.props.setCounterDispatch(this.props.counter + 1);
-        if (this.props.counter === 11) {
+        if (this.props.counter === 9) {
             console.log("finish");
+            console.log('ERRORES: ' + this.props.score.contFalse + '     EXITOS: ' + this.props.score.contTrue);
+
         }
     };
 
@@ -132,10 +142,13 @@ Home.propTypes = {
 export default connect(
     state => ({
         counter: counterSelector(state),
+        score: scoreSelector(state),
         question: getCurrentQuestion(state)
     }),
     dispatch => ({
         setCounterDispatch: value => dispatch(setCounterAction(value)),
+        setCounterTrueDispatch: value => dispatch(setCounterTrueAction(value)),
+        setCounterFalseDispatch: value => dispatch(setCounterFalseAction(value)),
         setQuestionsDispatch: questions => dispatch(setQuestionsAction(questions))
     })
 )(Home);
