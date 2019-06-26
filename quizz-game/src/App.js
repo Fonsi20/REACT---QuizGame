@@ -6,11 +6,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   render() {
+    console.log(this.props);
     return (
       <React.Fragment>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={(history) => <LogIn />} />
+            <Route exact path="/" component={(history) => <LogIn/>} />
             <Route path="/question" component={home} />
             <Route path="/score" component={score} />
           </Switch>

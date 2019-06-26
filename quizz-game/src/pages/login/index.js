@@ -29,6 +29,7 @@ class LogIn extends Component {
 
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
+        console.log(this.props.cont);
         console.log(this.state.question);
         axios.get('http://localhost:3000/api/question')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {

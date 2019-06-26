@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -8,9 +9,6 @@ import PropTypes from 'prop-types';
 import './style.css';
 import axios from 'axios';
 
-var cont = 1;
-var yes = 0;
-var no = 0;
 //BODY
 class home extends Component {
 
@@ -26,17 +24,20 @@ class home extends Component {
             aswn4: [],
             true: [],
             yes: [],
-            no: []
+            no: [],
+            cont: [],
+            conttrue: [],
+            contfalse: [],
         }
     }
 
     //Obtain the Data of my DDBB
     getDataFromDb = () => {
-        console.log(this.state.question);
+        console.log("VALUE: " + this.props);
         axios.get('http://localhost:3000/api/question')
             .then(res => JSON.parse(JSON.stringify(res))).then(body => {
                 body.data.data.forEach(data => {
-                    if (data.id === cont) {
+                    if (data.id === this.props.cont) {
                         console.log(data.question);
                         this.setState({ id: data.id });
                         this.setState({ question: data.question });
@@ -46,12 +47,12 @@ class home extends Component {
                         this.setState({ aswn4: data.anws4 });
                         this.setState({ true: data.true });
                     }
+                    console.log("QUESTIONS: " + this.state.question);
                 });
             })
             .catch(function (error) {
                 console.log(error);
             })
-        console.log(this.state.question);
     };
 
     componentDidMount() {
@@ -61,22 +62,19 @@ class home extends Component {
     checkQuestion = (event, anws) => {
         if (anws === this.state.true) {
             console.log("SIIIII");
-            yes++;
+            this.state.dispatch({ type: 'INCREMENTTRUE' });
         } else {
             console.log("NOOOOOOOOO");
-            no++;
+            this.state.dispatch({ type: 'INCREMENTFALSE' });
         }
-        cont++;
-        if (cont === 10) {
+        this.state.dispatch({ type: 'INCREMENT' })
+        if (this.props.value === 11) {
             console.log("finish");
-            console.log(yes);
-            console.log(no);
-        } else {
-            //window.location.reload(true);
         }
     }
 
     render() {
+        const { valu } = this.props.cont
         return (
             <Grid container>
                 <Grid
@@ -89,11 +87,10 @@ class home extends Component {
                     alignItems="center"
                 >
                     <Paper className="paper">
-                        <Typography variant="h5" component="h3"><b>Number {cont}</b></Typography>
+                        <Typography variant="h5" component="h3"><b>Number {valu}</b></Typography>
                         <Typography component="p"> You have to response 10 questions.</Typography>
                         <div>
                             <TextField
-                                onChange={e => this.setState({ email: e.target.value })}
                                 component="div"
                                 whiteSpace="nowrap"
                                 id="question"
@@ -143,7 +140,10 @@ class home extends Component {
 };
 
 home.propTypes = {
-    classes: PropTypes.object.isRequired,
+    value: PropTypes.number.isRequired,
+    onIncrement: PropTypes.func.isRequired,
+    onIncrementTrue: PropTypes.func.isRequired,
+    onIncrementFalse: PropTypes.func.isRequired
 };
 
-export default home;
+export default connect(home);

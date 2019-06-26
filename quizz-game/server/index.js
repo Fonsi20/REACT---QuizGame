@@ -1,9 +1,8 @@
 var express = require("express");
 var mongoose = require("mongoose");
 var app = express();
-const API_PORT = 3001;
-const DataUser = require("./Models/users");
-const DataQuestions = require("./Models/questions");
+const API_PORT = 3000;
+const Data = require("./data");
 const router = express.Router();
 
 // this is our MongoDB database
@@ -21,22 +20,16 @@ db.once("open", () => console.log("connected to the database"));
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(logger("dev"));
-
-
-
-router.get('/api/question', function (req, res) {
-    DataQuestions.find((err, data) => {
+app.get('/api/question', function (req, res) {
+    Data.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
 });
 
-router.post('/api/results', function (req, res) {
+app.post('/api/results', function (req, res) {
 
-    let data = new DataUser();
+    let data = new Data();
     const { id, email, score } = req.body;
 
     if ((!id && id !== 0)) {
@@ -54,22 +47,22 @@ router.post('/api/results', function (req, res) {
     });
 });
 
-router.get('/api/results', function (req, res) {
-    DataUser.find((err, data) => {
+app.get('/api/results', function (req, res) {
+    Data.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
 });
 
-router.get('/api/Verify', function (req, res) {
-    DataUser.find((err, data) => {
+app.get('/api/Verify', function (req, res) {
+    Data.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
 });
 
-router.get('/api/results/:userId', function (req, res) {
-    DataUser.find((err, data) => {
+app.get('/api/results/:userId', function (req, res) {
+    Data.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
     });
