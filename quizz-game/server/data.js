@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const UsersSchema = new Schema({
   users: {
-    id: Number,
     email: String,
     score: String
   }
@@ -30,7 +29,7 @@ const QuestionsSchema = new Schema({
 
 // export the new Schema so we could modify it using Node.js
 
-const users = mongoose.model('user', UsersSchema);
-const questions = mongoose.model('question', QuestionsSchema);
+const users = mongoose.model('users', UsersSchema);
+const questions = mongoose.model('questions', QuestionsSchema);
 
 module.exports = {users, questions};

@@ -15,6 +15,7 @@ import { setQuestionsAction } from "../../store/actions/questions";
 import { setCounterTrueAction } from "../../store/actions/score";
 import { setCounterFalseAction } from "../../store/actions/score";
 import { scoreSelector } from "../../store/selectors";
+import { emailSelector } from "../../store/selectors";
 
 //BODY
 
@@ -50,7 +51,6 @@ class Home extends Component {
         console.log(this.props.score);
         if (anws === this.props.question.true) {
             console.log("SIIIII");
-            //console.log(this.props.contTrue);
             this.props.setCounterTrueDispatch(this.props.score.contTrue + 1);
         } else {
             console.log("NOOOOOOOOO");
@@ -60,6 +60,14 @@ class Home extends Component {
         if (this.props.counter === 9) {
             console.log("finish");
             console.log('ERRORES: ' + this.props.score.contFalse + '     EXITOS: ' + this.props.score.contTrue);
+
+            var totalScore = this.props.score.contTrue - this.props.score.contFlase;
+            console.log(this.props.email);
+            axios.post("http://localhost:3000/api/results", {
+                email: this.props.email,
+                score: totalScore,
+            });
+
             this.props.history.push('/score');
         }
     };
@@ -143,6 +151,7 @@ export default connect(
     state => ({
         counter: counterSelector(state),
         score: scoreSelector(state),
+        email: emailSelector(state),
         question: getCurrentQuestion(state)
     }),
     dispatch => ({

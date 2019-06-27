@@ -43,20 +43,13 @@ app.get('/api/question', function (req, res) {
 });
 
 app.post('/api/results', function (req, res) {
+    let use = new users();
+    const { email, score } = req.body;
 
-    let users = new users();
-    const { id, email, score } = req.body;
-
-    if ((!id && id !== 0)) {
-        return res.json({
-            success: false,
-            error: "INVALID INPUTS"
-        });
-    }
-    users.email = email;
-    users.score = score;
-    users.id = id;
-    users.save(err => {
+    use.email = email;
+    use.score = score;
+  
+    use.save(err => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
     });
