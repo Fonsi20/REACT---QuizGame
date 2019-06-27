@@ -21,28 +21,34 @@ class LogIn extends React.Component {
 
         this.state = {
             email: [],
+            data: [],
         }
     }
 
     starGame = () => {
         //Obtain the Data of my DDBB
-        var fail = true;
         axios.get('http://localhost:3000/api/Verify')
-            .then(res => JSON.parse(JSON.stringify(res))).then(body => {
-                body.data.data.forEach(data => {
-                    if (data.email === this.state.email) {
-                        fail = false;
-                        window.alert("User exist in the DDBB");
-                    } else {
-                        this.props.setEmailDispatch(this.state.email);
-                        this.props.history.push('/question');
-                    }
-                });
+            .then(res => JSON.parse(JSON.stringify(res)).data.data).
+            then(body => {
+                this.setState({ data: body });
             })
             .catch(function (error) {
                 console.log(error);
             });
+        this.checkErrorLogin();
     };
+
+
+    checkErrorLogin = () => {
+        console.log(this.state);
+        if (this.state.data.email === this.state.email) {
+            window.alert("User exist in the DDBB");
+        } else {
+            console.log("lets play");
+            this.props.setEmailDispatch(this.state.email);
+            this.props.history.push('/question');
+        }
+    }
 
 
     render() {
