@@ -60,8 +60,9 @@ class Home extends Component {
             console.log("finish");
             console.log('ERRORES: ' + this.props.score.contFalse + '     EXITOS: ' + this.props.score.contTrue);
 
-            var totalScore = this.props.score.contTrue - this.props.score.contFlase;
-            console.log(this.props.email);
+            var totalScore = this.props.score.contTrue - this.props.score.contFalse;
+            console.log("EMAIL: " + this.props.email);
+            console.log("SCORE: " + totalScore);
             axios.post("http://localhost:3000/api/results", {
                 email: this.props.email,
                 score: totalScore,
@@ -72,6 +73,7 @@ class Home extends Component {
     };
 
     render() {
+        console.log("EMAIL22: " + this.props.email);
         const value = this.props.counter + 1;
         const data = this.props.question;
 
