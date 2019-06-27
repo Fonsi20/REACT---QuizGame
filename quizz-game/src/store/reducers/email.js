@@ -1,16 +1,16 @@
 
 import {initialState} from '../initialState';
 
-export const SET_COUNTER = 'SET_COUNTER';
+export const SET_EMAIL = 'SET_EMAIL';
 
-export default function counter (state = initialState.counter, action) {
+export default function counter (state = initialState.email, action) {
     switch (action.type) {
-        case SET_COUNTER:
+        case SET_EMAIL:
             console.log(state, action)
             return {
                 value: action.payload.value
             };
         default:
-            return initialState.counter;
+            return initialState.email;
     }
 }

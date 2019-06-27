@@ -8,8 +8,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './style.css';
 import axios from 'axios';
-
+import { connect } from "react-redux";
+import { setEmailAction } from "../../store/actions";
 var textLogin = "Email";
+
 
 //BODY
 class LogIn extends React.Component {
@@ -32,7 +34,8 @@ class LogIn extends React.Component {
                         fail = false;
                         window.alert("User exist in the DDBB");
                     } else {
-
+                        this.props.setEmailDispatch(this.state.email);
+                        this.props.history.push('/question');
                     }
                 });
             })
@@ -43,7 +46,6 @@ class LogIn extends React.Component {
 
 
     render() {
-        console.log(this.props);
         return (
             <main>
                 <Grid
@@ -68,9 +70,7 @@ class LogIn extends React.Component {
                                 margin="normal"
                                 variant="filled"
                                 required
-                                fullWidth
-
-                            />
+                                fullWidth />
                         </div>
                         <div>
                             <Button
@@ -88,7 +88,8 @@ class LogIn extends React.Component {
                                     variant="contained"
                                     color="secondary"
                                     className="button">
-                                    See Scores</Button></Link>
+                                    See Scores</Button>
+                            </Link>
                         </div>
                     </Paper>
                 </Grid>
@@ -102,4 +103,10 @@ LogIn.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default LogIn;
+export default connect(
+    state => ({
+    }),
+    dispatch => ({
+        setEmailDispatch: value => dispatch(setEmailAction(value))
+    })
+)(LogIn);

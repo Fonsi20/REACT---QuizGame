@@ -8,5 +8,6 @@ export const initialState = {
         contTrue: 0,
         contFalse: 0
     },
-    questions: []
+    questions: [],
+    email: ""
 };

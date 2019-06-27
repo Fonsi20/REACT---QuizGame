@@ -60,7 +60,7 @@ class Home extends Component {
         if (this.props.counter === 9) {
             console.log("finish");
             console.log('ERRORES: ' + this.props.score.contFalse + '     EXITOS: ' + this.props.score.contTrue);
-
+            this.props.history.push('/score');
         }
     };
 
