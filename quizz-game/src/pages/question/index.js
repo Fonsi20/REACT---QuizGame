@@ -18,7 +18,6 @@ import { scoreSelector } from "../../store/selectors";
 import { emailSelector } from "../../store/selectors";
 
 //BODY
-
 class Home extends Component {
 
     constructor(props) {

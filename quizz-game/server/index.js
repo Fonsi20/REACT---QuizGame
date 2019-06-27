@@ -56,10 +56,11 @@ app.post('/api/results', function (req, res) {
 });
 
 app.get('/api/results', function (req, res) {
+    var mysort = { "score": -1 };
     users.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true, data: data });
-    });
+    }).sort(mysort);
 });
 
 app.get('/api/Verify', function (req, res) {
