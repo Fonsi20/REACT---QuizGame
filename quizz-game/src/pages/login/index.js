@@ -11,7 +11,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 import { setEmailAction } from "../../store/actions";
 var textLogin = "Email";
-
+let check = true;
 
 //BODY
 class LogIn extends React.Component {
@@ -28,28 +28,30 @@ class LogIn extends React.Component {
     starGame = () => {
         //Obtain the Data of my DDBB
         axios.get('http://localhost:3000/api/Verify')
-            .then(res => JSON.parse(JSON.stringify(res)).data.data).
-            then(body => {
-                this.setState({ data: body });
+            .then(res => JSON.parse(JSON.stringify(res))).then(body => {
+                body.data.data.forEach(data => {
+                    console.log(check);
+                    if (data.email === this.state.email) {
+                        check = false;
+                    }
+                });
+
+                console.log(check);
+
+                if (check === false) {
+                    window.alert("User exist in the DDBB");
+                } else {
+                    console.log("lets play");
+                    this.props.setEmailDispatch(this.state.email);
+                    this.props.history.push('/question');
+                }
+                check = true;
+
             })
             .catch(function (error) {
                 console.log(error);
             });
-        this.checkErrorLogin();
     };
-
-
-    checkErrorLogin = () => {
-        console.log(this.state);
-        if (this.state.data.email === this.state.email) {
-            window.alert("User exist in the DDBB");
-        } else {
-            console.log("lets play");
-            this.props.setEmailDispatch(this.state.email);
-            this.props.history.push('/question');
-        }
-    }
-
 
     render() {
         return (
