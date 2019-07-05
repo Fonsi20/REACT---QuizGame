@@ -42,7 +42,7 @@ class Home extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props.score);
+        console.log("se lanzaaaa: " + this.props.score);
         this.getDataFromDb();
     };
 
@@ -55,26 +55,32 @@ class Home extends Component {
             console.log("NOOOOOOOOO");
             this.props.setCounterFalseDispatch(this.props.score.contFalse + 1);
         }
+
+        console.log("AHORA EL DEL CONTADOR");
         this.props.setCounterDispatch(this.props.counter + 1);
+
+        console.log('COUNTER: ' + this.props.counter + '     ERRORES: ' + this.props.score.contFalse + '     EXITOS: ' + this.props.score.contTrue);
+
         if (this.props.counter === 9) {
             console.log("finish");
             console.log('ERRORES: ' + this.props.score.contFalse + '     EXITOS: ' + this.props.score.contTrue);
 
             var totalScore = this.props.score.contTrue - this.props.score.contFalse;
-            console.log("EMAIL: " + this.props.email.value);
+            totalScore = "10";
+            console.log("EMAIL: " + this.props.email);
             console.log("SCORE: " + totalScore);
             axios.post("http://localhost:3000/api/results", {
-                email: this.props.email.value,
+                email: this.props.email,
                 score: totalScore,
             });
-
             this.props.history.push('/score');
         }
     };
 
     render() {
-        console.log("EMAIL22: " + this.props.email.value);
-        const value = this.props.counter + 1;
+        console.log("EMAIL22: " + this.props.email);
+        const valueCont = this.props.counter + 1;
+        console.log(this.props.question);
         const data = this.props.question;
 
         return (
@@ -89,7 +95,7 @@ class Home extends Component {
                     alignItems="center"
                 >
                     <Paper className="paper">
-                        <Typography variant="h5" component="h3"><b>Number {value}</b></Typography>
+                        <Typography variant="h5" component="h3"><b>Number {valueCont}</b></Typography>
                         <Typography component="p"> You have to response 10 questions.</Typography>
                         <div>
                             <TextField
@@ -157,8 +163,8 @@ export default connect(
     }),
     dispatch => ({
         setCounterDispatch: value => dispatch(setCounterAction(value)),
-        setCounterTrueDispatch: value => dispatch(setCounterTrueAction(value)),
-        setCounterFalseDispatch: value => dispatch(setCounterFalseAction(value)),
+        setCounterTrueDispatch: valueTrue => dispatch(setCounterTrueAction(valueTrue)),
+        setCounterFalseDispatch: valueFalse => dispatch(setCounterFalseAction(valueFalse)),
         setQuestionsDispatch: questions => dispatch(setQuestionsAction(questions))
     })
 )(Home);

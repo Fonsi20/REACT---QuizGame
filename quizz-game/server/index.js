@@ -2,11 +2,11 @@ var express = require("express");
 var mongoose = require("mongoose");
 var app = express();
 const API_PORT = 3000;
-const {users,questions} = require("./data");
+const { users, questions } = require("./data");
 const router = express.Router();
 
 // this is our MongoDB database
-const dbRoute = "mongodb://localhost:27017/gamequiz";
+const dbRoute = "mongodb://localhost:27017/quizzgame";
 
 // connects our back end code with the database
 mongoose.connect(
@@ -48,7 +48,7 @@ app.post('/api/results', function (req, res) {
 
     use.email = email;
     use.score = score;
-  
+    console.log("a guardar");
     use.save(err => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });

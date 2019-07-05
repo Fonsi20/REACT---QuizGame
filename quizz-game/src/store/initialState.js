@@ -9,5 +9,5 @@ export const initialState = {
         contFalse: 0
     },
     questions: [],
-    email: ""
+    email: "emma@mail.com"
 };

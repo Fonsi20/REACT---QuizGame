@@ -1,22 +1,24 @@
 
-import {initialState} from '../initialState';
+import { initialState } from '../initialState';
 
 export const SET_COUNTER_TRUE = 'SET_COUNTER_TRUE';
 export const SET_COUNTER_FALSE = 'SET_COUNTER_FALSE';
 
 export default function score(state = initialState.score, action) {
+    console.log(action.type);
     switch (action.type) {
         case SET_COUNTER_TRUE:
             return {
                 ...state,
-                conttrue: state.contTrue + 1
+                contTrue: action.payload.valueTrue
             };
         case SET_COUNTER_FALSE:
             return {
                 ...state,
-                contFalse: state.contFalse + 1
+                contFalse: action.payload.valueFalse
             };
-      default:
-        return initialState.score
+        default:
+            console.log("ERROR - ENTRA EN UN DEFAULT")
+            return initialState.score
     }
-  }
+}

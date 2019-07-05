@@ -2,20 +2,20 @@ import {SET_COUNTER_TRUE} from "../reducers/score";
 import {SET_COUNTER_FALSE} from "../reducers/score";
 
 
-export const setCounterTrueAction = (value) => {
+export const setCounterTrueAction = (valueTrue) => {
     return {
         type: SET_COUNTER_TRUE,
         payload: {
-            value
+            valueTrue
         }
     }
 };
 
-export const setCounterFalseAction = (value) => {
-    return {
+export const setCounterFalseAction = (valueFalse) => {
+    return { 
         type: SET_COUNTER_FALSE,
         payload: {
-            value
+            valueFalse
         }
     }
 };
